@@ -1,0 +1,5 @@
+package com.easytobuy;
+
+public interface RatingRepository {
+
+}

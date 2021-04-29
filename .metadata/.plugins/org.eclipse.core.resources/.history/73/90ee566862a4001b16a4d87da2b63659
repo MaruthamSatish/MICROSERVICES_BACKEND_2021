@@ -1,0 +1,5 @@
+FROM openjdk:8-jre-alpine
+WORKDIR /temp
+EXPOSE 9095
+ADD target/RATING-API-V2-0.0.1-SNAPSHOT.jar RATING-API-V2-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","RATING-API-V2-0.0.1-SNAPSHOT.jar"]

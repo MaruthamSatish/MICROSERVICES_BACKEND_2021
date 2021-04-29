@@ -1,0 +1,21 @@
+/**
+ * 
+ */
+package com.easytobuy;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
+
+/**
+ * @author Satish Reddy
+ *
+ */
+@RestController
+@RequestMapping("/api/rating")
+@RequiredArgsConstructor
+public class RatingRestController {
+
+	
+}

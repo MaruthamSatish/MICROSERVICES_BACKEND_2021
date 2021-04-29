@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package com.easytobuy;
+
+import org.springframework.http.ResponseEntity;
+
+/**
+ * @author Satish Reddy
+ *
+ */
+public class ProductAPIExceptionHandler {
+
+	public ResponseEntity<Object> productAPIExceptionHandler(ProductAPIException apiException){
+		new ProductException(apiException.getLocalizedMessage(), null, null, null)
+		return null;
+		
+	}
+}

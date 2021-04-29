@@ -1,0 +1,19 @@
+server:
+  error:    include-stacktrace: on-trace-param
+  port: 9091
+spring:
+  application:
+    name: product-service
+  data:    mongodb:      uri: mongodb://localhost:27017/microservices
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  #instance:
+    #instance-id: ${spring.application.name}:${random.uuid}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+ 
