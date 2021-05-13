@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/products")
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductRestController {
 
 	@Autowired
@@ -43,7 +44,7 @@ public class ProductRestController {
 		return new ResponseEntity<List<Product>>(getAllProducts, HttpStatus.OK);
 
 	}
-	@CrossOrigin(origins = "http://localhost:4200")
+	//@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/category/{categoryId}")
 	public List<Product> getByCategoryId(@PathVariable("categoryId") String categoryId) {
 		List<Product> product = productRepository.findByCategoryId(categoryId);
@@ -84,6 +85,12 @@ public class ProductRestController {
 		} else {
 			return HttpStatus.NOT_FOUND;
 		}
+	}
+
+	@GetMapping("/{productId}")
+	public List<Product> getByProductId(@PathVariable("productId") String productId) {
+		List<Product> product = productRepository.findByProductId(productId);
+		return product;
 	}
 
 }
