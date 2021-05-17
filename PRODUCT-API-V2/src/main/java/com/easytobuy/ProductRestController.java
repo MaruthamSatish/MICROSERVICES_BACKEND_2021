@@ -20,31 +20,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 /**
  * @author SatishReddy
  *
  */
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "http://localhost:4200")
+
 public class ProductRestController {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
 	@Autowired
-	private CouponFeignProxy couponProxy;
-	@Autowired
-	private CategoryFeignProxy categoryProxy;
+	private FeignClientProxy feignClientProxy;
 
 	@GetMapping
-	//@CrossOrigin(origins = "http://localhost:4200")
+	// @CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<Product>> getAllProducts() {
 		List<Product> getAllProducts = productRepository.findAll().stream().collect(Collectors.toList());
 		return new ResponseEntity<List<Product>>(getAllProducts, HttpStatus.OK);
 
 	}
-	//@CrossOrigin(origins = "http://localhost:4200")
+
+	// @CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/category/{categoryId}")
 	public List<Product> getByCategoryId(@PathVariable("categoryId") String categoryId) {
 		List<Product> product = productRepository.findByCategoryId(categoryId);
@@ -54,12 +54,12 @@ public class ProductRestController {
 	@PostMapping
 	public ResponseEntity<Product> saveProduct(@RequestBody Product products) {
 		try {
-			Optional<Coupon> getCoupnDetails= couponProxy.findByCouponCode(products.getCouponCode());
-			Optional<Category> getCategoryDetail= categoryProxy.findByCategoryName(products.getCategoryId());
-			if(getCoupnDetails.isPresent()) {
+			Optional<Coupon> getCoupnDetails = getCoupnDetails(products.getCouponCode());
+			Optional<Category> getCategoryDetail = getCategoryDetails(products.getCategoryId());
+			if (getCoupnDetails.isPresent() && getCategoryDetail.isPresent()) {
 				products.setProductPrice(products.getProductPrice().subtract(getCoupnDetails.get().getCouponPrice()));
 				products.setCategoryId(getCategoryDetail.get().getCategoryId().toString());
-                productRepository.save(products);
+				productRepository.save(products);
 			}
 			return new ResponseEntity<Product>(products, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -91,6 +91,18 @@ public class ProductRestController {
 	public List<Product> getByProductId(@PathVariable("productId") String productId) {
 		List<Product> product = productRepository.findByProductId(productId);
 		return product;
+	}
+
+	@CircuitBreaker(name = "coupon-service")
+	public Optional<Coupon> getCoupnDetails(String productCode) {
+		Optional<Coupon> getCoupnDetails = feignClientProxy.findByCouponCode(productCode);
+		return getCoupnDetails;
+	}
+
+	@CircuitBreaker(name = "category-service")
+	public Optional<Category> getCategoryDetails(String categoryName) {
+		Optional<Category> getCategoryDetail = feignClientProxy.findByCategoryName(categoryName);
+		return getCategoryDetail;
 	}
 
 }

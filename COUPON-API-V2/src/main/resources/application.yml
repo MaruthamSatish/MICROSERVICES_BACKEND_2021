@@ -9,7 +9,7 @@ management:
       exposure:
         include: '*'
 server:
-  port: 909
+  port: 9098
 spring:
   application:
     name: coupon-service

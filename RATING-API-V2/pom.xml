@@ -10,12 +10,15 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.easytobuy</groupId>
-	<artifactId>RATING-API-V2</artifactId>
+	<artifactId>rating-api-v2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>RATING-API-V2</name>
-	<description>RATING-API-V2</description>
+	<name>rating-api-v2</name>
+	<description>rating-api-v2</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<jkube.version>1.2.0</jkube.version>
+		<jkube.generator.name>satishlakshmireddy/${project.artifactId}:${project.version}</jkube.generator.name>
+        
 	</properties>
 	<dependencies>
 		<dependency>
@@ -59,6 +62,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -75,25 +86,18 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
 			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<from>
-						<image>openjdk:8-jre-alpine</image>
-					</from>
-					<to>
-						<image>registry.hub.docker.com/satishlakshmireddy/rating-api:v1</image>
-					</to>
-					<container>
-						<ports>
-							<port>9095</port>
-						</ports>
-					</container>
-				</configuration>
+				<groupId>org.eclipse.jkube</groupId>
+				<artifactId>kubernetes-maven-plugin</artifactId>
+				<version>${jkube.version}</version>
+				
 			</plugin>
+
+			<!-- <plugin> <groupId>com.google.cloud.tools</groupId> <artifactId>jib-maven-plugin</artifactId> 
+				<version>3.0.0</version> <configuration> <from> <image>openjdk:8-jre-alpine</image> 
+				</from> <to> <image>registry.hub.docker.com/satishlakshmireddy/rating-api:v1</image> 
+				</to> <container> <ports> <port>9095</port> </ports> </container> </configuration> 
+				</plugin> -->
 
 		</plugins>
 	</build>
