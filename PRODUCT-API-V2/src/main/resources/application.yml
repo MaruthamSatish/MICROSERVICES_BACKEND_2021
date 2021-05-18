@@ -5,6 +5,8 @@ spring:
   application:
     name: product-service
   data:    mongodb:      uri: mongodb://localhost:27017/microservices
+      
+  zipkin:    base-url: http://localhost:9411
 eureka:
   client:
     serviceUrl:
@@ -19,6 +21,8 @@ management:
     web:
       exposure:
         include: '*'
+  
+  
 
 #Resilience 4J Configurations for Coupon Service
 

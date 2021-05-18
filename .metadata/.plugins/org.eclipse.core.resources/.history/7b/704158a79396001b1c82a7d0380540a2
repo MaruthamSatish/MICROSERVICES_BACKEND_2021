@@ -1,6 +1,0 @@
-package com.easytobuy;
-
-public class ProductException {
- private final String message;
-
-}

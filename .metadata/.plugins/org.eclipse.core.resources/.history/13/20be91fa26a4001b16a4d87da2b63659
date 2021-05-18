@@ -1,7 +1,0 @@
-package com.easytobuy;
-
-
-@Repository
-public interface RatingRepository extends JpaRepository<Rating, String> {
-
-}

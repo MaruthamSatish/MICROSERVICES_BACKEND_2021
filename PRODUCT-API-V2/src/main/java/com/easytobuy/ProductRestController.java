@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +33,7 @@ public class ProductRestController {
 	@Autowired
 	private ProductRepository productRepository;
 	@Autowired
-	private FeignClientProxy feignClientProxy;
+	private CommonService commonService;
 
 	@GetMapping
 	// @CrossOrigin(origins = "http://localhost:4200")
@@ -54,8 +53,8 @@ public class ProductRestController {
 	@PostMapping
 	public ResponseEntity<Product> saveProduct(@RequestBody Product products) {
 		try {
-			Optional<Coupon> getCoupnDetails = getCoupnDetails(products.getCouponCode());
-			Optional<Category> getCategoryDetail = getCategoryDetails(products.getCategoryId());
+			Optional<Coupon> getCoupnDetails = commonService.getCoupnDetails(products.getCouponCode());
+			Optional<Category> getCategoryDetail = commonService.getCategoryDetails(products.getCategoryId());
 			if (getCoupnDetails.isPresent() && getCategoryDetail.isPresent()) {
 				products.setProductPrice(products.getProductPrice().subtract(getCoupnDetails.get().getCouponPrice()));
 				products.setCategoryId(getCategoryDetail.get().getCategoryId().toString());
@@ -93,16 +92,6 @@ public class ProductRestController {
 		return product;
 	}
 
-	@CircuitBreaker(name = "coupon-service")
-	public Optional<Coupon> getCoupnDetails(String productCode) {
-		Optional<Coupon> getCoupnDetails = feignClientProxy.findByCouponCode(productCode);
-		return getCoupnDetails;
-	}
-
-	@CircuitBreaker(name = "category-service")
-	public Optional<Category> getCategoryDetails(String categoryName) {
-		Optional<Category> getCategoryDetail = feignClientProxy.findByCategoryName(categoryName);
-		return getCategoryDetail;
-	}
+	
 
 }

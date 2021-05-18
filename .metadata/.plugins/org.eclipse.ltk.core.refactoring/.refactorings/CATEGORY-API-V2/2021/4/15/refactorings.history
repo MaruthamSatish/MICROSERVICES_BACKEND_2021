@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy 2 elements to &apos;CATEGORY_API_V1/src/main/java/com.easytobuy&apos;&#x0D;&#x0A;- Original project: &apos;CATEGORY-API-V2&apos;&#x0D;&#x0A;- Destination element: &apos;CATEGORY_API_V1/src/main/java/com.easytobuy&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     com.easytobuy.Category.java&#x0D;&#x0A;     com.easytobuy.CategoryRepository.java" description="Copy compilation units" destination="=CATEGORY_API_V1/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.easytobuy" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.easytobuy{Category.java" element2="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.easytobuy{CategoryRepository.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1617722986014" units="2" version="1.0"/>
-</session>
