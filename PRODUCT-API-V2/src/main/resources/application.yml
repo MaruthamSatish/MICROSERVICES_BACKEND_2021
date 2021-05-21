@@ -1,56 +1,0 @@
-server:
-  error:    include-stacktrace: on-trace-param
-  port: 9091
-spring:
-  application:
-    name: product-service
-  data:    mongodb:      uri: mongodb://localhost:27017/microservices
-      
-  zipkin:    base-url: http://localhost:9411
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
-  #instance:
-    #instance-id: ${spring.application.name}:${random.uuid}
-management:
-  health:    circuitbreakers:      enabled: true
-  endpoint:    health:      show-details: always
-      
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  
-  
-
-#Resilience 4J Configurations for Coupon Service
-
-resilience4j.circuitbreaker:
-    instances:
-        coupon-service:
-            registerHealthIndicator: true
-            slidingWindowSize: 10
-            permittedNumberOfCallsInHalfOpenState: 5
-            minimumNumberOfCalls: 20
-            waitDurationInOpenState: 30000
-            failureRateThreshold: 50
-            eventConsumerBufferSize: 10
-            allow-health-indicator-to-fail: true
-            automatic-transition-from-open-to-half-open-enabled: true
-            
-            
-            
-        category-service:
-            registerHealthIndicator: true
-            slidingWindowSize: 10
-            permittedNumberOfCallsInHalfOpenState: 5
-            minimumNumberOfCalls: 20
-            waitDurationInOpenState: 30000
-            failureRateThreshold: 50
-            eventConsumerBufferSize: 10
-            allow-health-indicator-to-fail: true
-            automatic-transition-from-open-to-half-open-enabled: true
-
-                  
-          
