@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,6 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
  */
 @RestController
 @RequestMapping("/api/products")
-
 public class ProductRestController {
 
 	@Autowired
@@ -43,8 +43,9 @@ public class ProductRestController {
 
 	}
 
-	// @CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/category/{categoryId}")
+
 	public List<Product> getByCategoryId(@PathVariable("categoryId") String categoryId) {
 		List<Product> product = productRepository.findByCategoryId(categoryId);
 		return product;
