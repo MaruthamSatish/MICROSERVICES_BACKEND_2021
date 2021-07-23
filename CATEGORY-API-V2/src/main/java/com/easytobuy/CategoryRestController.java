@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
  *
  */
 @RestController
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/category")
 @RequiredArgsConstructor
 public class CategoryRestController {

@@ -28,6 +28,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
  */
 @RestController
 @RequestMapping("/api/products")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductRestController {
 
 	@Autowired
@@ -45,8 +46,7 @@ public class ProductRestController {
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/category/{categoryId}")
-
-	public List<Product> getByCategoryId(@PathVariable("categoryId") String categoryId) {
+    public List<Product> getByCategoryId(@PathVariable("categoryId") String categoryId) {
 		List<Product> product = productRepository.findByCategoryId(categoryId);
 		return product;
 	}
